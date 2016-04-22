@@ -27,7 +27,7 @@ To build the image yourself without apt-cacher (also consumes more bandwidth
 since deb packages need to be refetched each time you build) do:
 
 ```
-docker build -t thinkwhere/mapproxy git://github.com/thinkwhere/docker-mapproxy
+docker build -t thinkwhere/mapproxy git://github.com/thinkwhere/mapproxy-docker
 ```
 
 To build with apt-cache (and minimised download requirements) do you need to
@@ -36,7 +36,7 @@ match your cacher host. Then build using a local url instead of directly from
 github.
 
 ```
-git clone git://github.com/thinkwhere/docker-mapproxy
+git clone git://github.com/thinkwhere/mapproxy-docker
 ```
 
 Now edit ``71-apt-cacher-ng`` then do:
@@ -51,7 +51,7 @@ To run a mapproxy container do:
 
 ```
 docker run --name "mapproxy" -p 8080:8080 -d -t \
-     thinkwhere/docker-mapproxy
+     thinkwhere/mapproxy-docker
 ```
 
 Typically you will want to mount the mapproxy volume, otherwise you won't be
@@ -60,7 +60,7 @@ able to edit the configs:
 ```
 mkdir mapproxy
 docker run --name "mapproxy" -p 8080:8080 -d -t -v \
-   `pwd`/mapproxy:/mapproxy thinkwhere/docker-mapproxy
+   `pwd`/mapproxy:/mapproxy thinkwhere/mapproxy-docker
 ```
 
 The first time your run the container, mapproxy basic default configuration
