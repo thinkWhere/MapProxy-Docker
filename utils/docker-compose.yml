@@ -1,0 +1,21 @@
+version: '2'
+services:
+  nginx:
+    build: ./docker-nginx
+    ports:
+     - "8080:80"
+     - "443:443"
+    volumes:
+     - logvolume01:/var/log
+    links:
+     - mapproxy:mapproxy
+  mapproxy:
+    build: ./docker-mapproxy
+    ports:
+     - "8080:8080"
+    volumes:
+     - ~/mapproxy:/mapproxy
+volumes:
+  logvolume01: {}
+  
+
