@@ -1,6 +1,8 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM python:2.7
-MAINTAINER Tim Sutton<tim@kartoza.com>
+FROM python:3.4
+MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
+
+# Based on the docker recipe by Tim Sutton https://github.com/kartoza/docker-mapproxy
 
 # Use local cached debs from host (saves your bandwidth!)
 # Change ip below to that of your apt-cacher-ng host
@@ -24,7 +26,8 @@ RUN apt-get install -y \
     zlib1g-dev \
     libfreetype6-dev \
     python-virtualenv
-RUN pip install Shapely Pillow MapProxy uwsgi
+RUN pip install --upgrade pip
+RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi
 
 EXPOSE 8080
 

@@ -1,1 +1,3 @@
-docker build -t kartoza/mapproxy .
+#!/bin/sh
+
+docker build -t thinkwhere/mapproxy .
