@@ -31,13 +31,13 @@ RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi
 
 EXPOSE 8080
 
-ADD uwsgi.conf /uwsgi.conf
+ADD uwsgi.ini /uwsgi.ini
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
 #USER www-data
 # Now launch mappproxy in the foreground
 # The script will create a simple config in /mapproxy
-# if one does not exist. Typically you should mount 
+# if one does not exist. Typically you should mount
 # /mapproxy as a volume
 CMD /start.sh
