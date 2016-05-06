@@ -7,7 +7,6 @@ MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 # Use local cached debs from host (saves your bandwidth!)
 # Change ip below to that of your apt-cacher-ng host
 # Or comment this line out if you do not with to use caching
-ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
 
 RUN apt-get -y update
 
@@ -21,15 +20,15 @@ RUN apt-get install -y \
     python-lxml \
     libgdal-dev \
     build-essential \
-    python-dev \
+    python3-dev \
     libjpeg-dev \
     zlib1g-dev \
     libfreetype6-dev \
     python-virtualenv
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi
+RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests
 
-EXPOSE 8080
+EXPOSE 8080 1717
 
 ADD uwsgi.ini /uwsgi.ini
 ADD start.sh /start.sh

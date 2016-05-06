@@ -1,0 +1,19 @@
+version: '2'
+services:
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+     - "80:80"
+     - "443:443"
+    links:
+     - mapproxy:mapproxy
+  mapproxy:
+    restart: always
+    build: ./mapproxy
+    hostname: mapproxy
+    expose:
+     - "8080"
+     - "1717"
+    volumes:
+     - ~/mapproxy:/mapproxy
