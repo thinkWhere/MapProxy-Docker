@@ -28,8 +28,6 @@ RUN apt-get install -y \
 RUN pip install --upgrade pip
 RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests
 
-EXPOSE 8080 1717
-
 ADD uwsgi.ini /uwsgi.ini
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
