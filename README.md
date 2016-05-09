@@ -29,8 +29,6 @@ or simply:
 ./build.sh
 ```
 
-The repository also includes a ``utils`` folder containing a sample nginx.conf file, and a docker-compose.yml file (not completed)
-
 # Run
 
 To run the mapproxy container do:
@@ -39,7 +37,7 @@ To run the mapproxy container do:
 ./run.sh
 ```
 
-This will create and mount a "mapproxy" folder in your current working directory as a volume 
+This will create and mount a "mapproxy" folder in your current working directory as a volume
 in the container.  This is used to hold the config .yaml files.  Mounting this volume
 allows you to create the config files without having to rebuild the image.
 
@@ -51,7 +49,7 @@ docker run --name "mapproxy" -p 8080:8080 -d -t -v \
 
 The first time your run the container, mapproxy basic default configuration
 files will be written into ``./mapproxy``. You should read the mapproxy documentation
-on how to configure these files and create appropriate service definitions for 
+on how to configure these files and create appropriate service definitions for
 your WMS services. Then restart the container to activate your changes.
 
 The cached wms tiles will be written to ``./mapproxy/cache_data``.
@@ -59,30 +57,25 @@ The cached wms tiles will be written to ``./mapproxy/cache_data``.
 **Note** that the mapproxy containerised application will run as the user that
 owns the /mapproxy folder.
 
-# Reverse proxy
+# Deployment using Reverse Proxy
 
-The mapproxy container 'speaks' ``uwsgi`` so you need to put nginx in front of it
-(try the ``nginx docker container``). The utils directory in this repo contains a sample nginx configuration 
-that will forward traffic into the uwsgi container, adding the appropriate headers as needed.
+The mapproxy container 'speaks' ``uwsgi`` so you need to put NGINX in front of it.
+This can be achived using Docker Compose, a tool for defining and running multi-container
+Docker applications.
+A docker-compose file is included, which will start both the MapProxy container and
+and an NGINX container together, with the appropriate ports exposed and links between
+the two containers.
 
-The nginx container can then be started up using a docker command similar to the following:
+**Note** docker-compose ships with the Docker Toolbox for Win/Mac users. Linux users will
+need to install [seperately](https://docs.docker.com/compose/install/).
 
-```
-docker run \
-	--name=nginxproxy \
-	-p 80:80 \
-	-p 443:443 \
-	-d \
-	--link=mapproxy \
-	nginx
-```
-
-In the above example I have a linked container to my nginx container called 'mapproxy'
-which is the dns name used in the mapproxy run command.
-
-Once the service is up and running you can connect to the default demo
-mapproxy page by pointing your browser at the URL below.
+To start the containers with Compose:
 
 ```
-http://localhost:8080/demo
+docker-compose up
+```
+
+In your browser navigate to:
+```
+http://localhost/demo
 ```
