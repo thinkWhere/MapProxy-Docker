@@ -7,11 +7,11 @@ groupadd -g $GROUP_ID mapproxy
 useradd --shell /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME
 
 # Create a default mapproxy config is one does not exist in /mapproxy
-if [ ! -f /mapproxy/mapproxy.yaml ]
+if [ ! -f /mapproxy/config/mapproxy.yaml ]
 then
-  su $USER_NAME -c "mapproxy-util create -t base-config mapproxy"
+  su $USER_NAME -c "mapproxy-util create -t base-config mapproxy/config"
 fi
 cd /mapproxy
-su $USER_NAME -c "mapproxy-util create -t wsgi-app -f mapproxy.yaml /mapproxy/app.py"
+su $USER_NAME -c "mapproxy-util create -t wsgi-app -f config/mapproxy.yaml /mapproxy/config/app.py"
 su $USER_NAME -c "uwsgi --ini /uwsgi.ini"
 #su $USER_NAME -c "mapproxy-util serve-develop -b 0.0.0.0:8080 mapproxy.yaml"
