@@ -27,6 +27,7 @@ RUN apt-get install -y \
     python-virtualenv
 RUN pip install --upgrade pip
 RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests
+RUN pip install git+https://github.com/schematics/schematics.git#egg=schematics
 
 ADD uwsgi.ini /uwsgi.ini
 ADD start.sh /start.sh
