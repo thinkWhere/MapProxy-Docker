@@ -30,8 +30,11 @@ RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
+RUN chmod 0755 /uwsgi.ini
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
+# Temp fix for coverages until next version of MapProxy available
+COPY geom.py /usr/local/lib/python3.4/site-packages/mapproxy/util/geom.py
 
 #USER www-data
 # Now launch mappproxy in the foreground
