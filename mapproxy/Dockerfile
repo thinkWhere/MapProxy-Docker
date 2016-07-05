@@ -26,7 +26,7 @@ RUN apt-get install -y \
     libfreetype6-dev \
     python-virtualenv
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests
+RUN pip install Shapely Pillow MapProxy==1.8.2 uwsgi requests geojson
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
