@@ -17,3 +17,5 @@ services:
      - "1717"
     volumes:
      - ~/mapproxy:/mapproxy
+    environment:
+     - MAPPROXY_ENV=staging
