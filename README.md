@@ -8,7 +8,7 @@ This recipe is adapted from the one provided by Tim Sutton  https://github.com/k
 ## Versions
 
 Python 3.4
-Mapproxy 1.8.2
+Mapproxy 1.9.0
 
 ## Getting the image
 
