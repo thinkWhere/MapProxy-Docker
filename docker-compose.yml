@@ -3,6 +3,11 @@ services:
   nginx:
     restart: always
     build: ./nginx
+    logging:
+        driver: "json-file"
+        options: 
+            max-size: "10m"
+            max-file: "10"
     ports:
      - "80:80"
      - "443:443"
@@ -11,6 +16,11 @@ services:
   mapproxy:
     restart: always
     build: ./mapproxy
+    logging:
+        driver: "json-file"
+        options: 
+            max-size: "10m"
+            max-file: "10"
     hostname: mapproxy
     expose:
      - "8080"
