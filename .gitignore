@@ -2,3 +2,6 @@
 tilestore
 cache_data/
 mapproxy/mapproxy
+
+# Pycharm
+.idea/

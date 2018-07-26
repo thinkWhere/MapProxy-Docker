@@ -1,5 +1,5 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM python:3.4
+FROM python:3.7
 MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 
 # Based on the docker recipe by Tim Sutton https://github.com/kartoza/docker-mapproxy
@@ -15,7 +15,7 @@ RUN apt-get -y update
 RUN apt-get install -y \
     python-imaging \
     python-yaml \
-    libproj0 \
+    libproj-dev \
     libgeos-dev \
     python-lxml \
     libgdal-dev \
@@ -26,7 +26,7 @@ RUN apt-get install -y \
     libfreetype6-dev \
     python-virtualenv
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.9.0 uwsgi requests geojson
+RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
