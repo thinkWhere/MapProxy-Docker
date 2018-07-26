@@ -12,6 +12,6 @@ then
   su $USER_NAME -c "mapproxy-util create -t base-config mapproxy/config"
 fi
 cd /mapproxy
-su $USER_NAME -c "mapproxy-util create -t wsgi-app -f config/mapproxy.yaml /mapproxy/config/app.py"
+su $USER_NAME -c "mapproxy-util create -t wsgi-app -f config/mapproxy.yaml /mapproxy/config/app.py --force"
 su $USER_NAME -c "uwsgi --ini /uwsgi.ini"
 #su $USER_NAME -c "mapproxy-util serve-develop -b 0.0.0.0:8080 mapproxy.yaml"
