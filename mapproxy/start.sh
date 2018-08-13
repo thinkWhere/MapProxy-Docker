@@ -6,12 +6,12 @@ USER_NAME=`ls -lah / | grep mapproxy | awk '{print $3}'`
 groupadd -g $GROUP_ID mapproxy
 useradd --shell /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME
 
-# Create a default mapproxy config is one does not exist in /mapproxy
-if [ ! -f /mapproxy/config/mapproxy.yaml ]
-then
-  su $USER_NAME -c "mapproxy-util create -t base-config mapproxy/config"
-fi
-cd /mapproxy
-su $USER_NAME -c "mapproxy-util create -t wsgi-app -f config/mapproxy.yaml /mapproxy/config/app.py --force"
+# MapProxy config, and the app.py will be provided in the target machine via EFS
+# TODO initialise the MapProxy config from git in the event of a completely new environment
+
+# Run MapProxy using uwsgi/nginx
 su $USER_NAME -c "uwsgi --ini /uwsgi.ini"
+
+# serve-develop is a test service for publishing a mapproxy config without a web server, which may be helpful for
+# debugging
 #su $USER_NAME -c "mapproxy-util serve-develop -b 0.0.0.0:8080 mapproxy.yaml"
