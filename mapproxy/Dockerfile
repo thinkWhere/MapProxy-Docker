@@ -1,5 +1,5 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM python:3.6
+FROM python:3.6.6
 MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 
 # Based on the docker recipe by Tim Sutton https://github.com/kartoza/docker-mapproxy
