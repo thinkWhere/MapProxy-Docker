@@ -1,4 +1,5 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
+# Mapproxy will error with any version higher than 3.6.6
 FROM python:3.6.6
 MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 
