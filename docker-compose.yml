@@ -10,7 +10,6 @@ services:
             max-file: "10"
     ports:
      - "80:80"
-     - "443:443"
     links:
      - mapproxy:mapproxy
   mapproxy:
@@ -26,6 +25,7 @@ services:
      - "8080"
      - "1717"
     volumes:
-     - ~/mapproxy:/mapproxy
+     - c:\code\themapcloud-mapproxy:/mapproxy/config
+     - c:\temp\cache:/mapproxy/cache
     environment:
      - MAPPROXY_ENV=staging

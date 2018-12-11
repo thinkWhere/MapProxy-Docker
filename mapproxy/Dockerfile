@@ -9,6 +9,7 @@ MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 # Change ip below to that of your apt-cacher-ng host
 # Or comment this line out if you do not with to use caching
 
+RUN apt-get -y upgrade
 RUN apt-get -y update
 
 #-------------Application Specific Stuff ----------------------------------------------------
