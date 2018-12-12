@@ -26,15 +26,17 @@ RUN apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
     libfreetype6-dev \
+    dos2unix \
     python-virtualenv
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson
+RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson pg8000
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
 RUN chmod 0755 /uwsgi.ini
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
+RUN dos2unix /start.sh
 # Temp fix for coverages until next version of MapProxy available
 # COPY geom.py /usr/local/lib/python3.4/site-packages/mapproxy/util/geom.py
 
