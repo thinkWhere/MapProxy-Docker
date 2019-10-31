@@ -29,7 +29,7 @@ RUN apt-get install -y \
     dos2unix \
     python-virtualenv
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson pg8000
+RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson==2.4.1 pg8000
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
