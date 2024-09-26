@@ -1,6 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 # Mapproxy will error with any version higher than 3.6.6
-FROM python:3.4
+FROM python:3.11
 MAINTAINER thinkWhere Ltd<info@thinkwhere.com>
 
 # Based on the docker recipe by Tim Sutton https://github.com/kartoza/docker-mapproxy
