@@ -1,13 +1,7 @@
-FROM python:3.5
+FROM python:3.7-slim-buster
 
-#ENV MAPPROXY_VERSION 1.11.0
-#ENV MAPPROXY_PROCESSES 4
-#ENV MAPPROXY_THREADS 2
-
-RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
   python-yaml \
-  python-pil \
   libgeos-dev \
   python-lxml \
   libgdal-dev \
@@ -17,7 +11,8 @@ RUN apt-get update \
   zlib1g-dev \
   libfreetype6-dev \
   python-virtualenv \
-  && rm -rf /var/lib/apt/lists/*
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --upgrade pip
 RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson
 RUN pip install --pre schematics
