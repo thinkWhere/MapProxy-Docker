@@ -1,0 +1,107 @@
+# Ros INSPIRE Configuration
+parts:
+  coverages:
+    bngcoverage: &bngcoverage
+      bbox: [0, 0, 700000, 1300000]
+      bbox_srs: EPSG:27700
+    europecoverage: &europecoverage
+      bbox: [-650000, -150000, 1350000, 1450000]
+      bbox_srs: EPSG:27700
+services:
+  demo:
+  wmts:
+  wms:
+    md:
+      title: ROS - INSPIRE View Services - WMS
+      abstract: An INSPIRE compliant WMS view service for Registers of Scotland public record data.
+      online_resource: https://www.ros.gov.uk
+      contact:
+        person: GIS Manager
+        position: GIS Manager
+        organization: Registers of Scotland
+        address: Meadowbank House, 153 London Road
+        city: Edinburgh
+        postcode: EH8 7AU
+        country: United Kingdom
+        phone: (+44)(0)131 659 6111
+        fax: not used
+        email: gis@ros.gov.uk
+      keyword_list:
+        - keywords:   [WMS, CADASTRAL PARCELS, PLANNING, LAND REGISTER, OWNERSHIP, TITLE, UNITED KINGDOM, ROS, REGISTERS OF SCOTLAND]
+    inspire_md:
+      type: linked
+      metadata_url:
+        media_type: application/vnd.iso.19139+xml
+        url: https://spatialdata.gov.scot/geonetwork/srv/api/records/e111d340-224d-4bdc-90a0-6ea114b3fb0c/formatters/xml
+      languages:
+        default: eng
+    srs: ['EPSG:4326','EPSG:27700','EPSG:4258', 'EPSG:3857', 'CRS:84']
+    bbox_srs:
+    - 'EPSG:4326'
+    - 'EPSG:27700'
+    - 'EPSG:4258'
+    - 'EPSG:3857'
+    - 'CRS:84'
+    image_formats: ['image/png', 'image/png8']
+    featureinfo_types: [text, html, xml, json]
+
+# Layers
+layers:
+- name: ROS - INSPIRE View Services - WMS
+  title: ROS - INSPIRE View Services - WMS
+  md:
+    abstract: An INSPIRE compliant WMS view service for Registers of Scotland public record data.
+  layers:
+  - name: CP.CadastralParcel
+    title: CP.CadastralParcel
+    md:
+      abstract: Land Register Title Seed Points. Title Seed Points are produced from the Land Register and provide a geographic point identifier for Land Register Titles. The Land Register was established in 1979 to replace the deeds based Sasine register (not available via INSPIRE) and established thereafter on a County by County basis until full incorporation of all areas of Scotland in 2003. The Spatial resolution varies from 1:1250 in urban, 1:2500 in rural and 1:10000 in moorland/mountain areas.
+      metadata:
+      - url: https://www.spatialdata.gov.scot/geonetwork/srv/eng/csw?SERVICE=CSW&REQUEST=GetRecordById&ID=2c17e031-5b71-4580-bf44-dd5250cc92a6&elementSetName=full&OutputSchema=http://www.isotc211.org/2005/gmd&version=2.0.2
+        type: ISO19115:2003
+        format: text/xml
+      keyword_list:
+        - keywords: [CADASTRAL PARCELS, PLANNING, LAND REGISTER, OWNERSHIP, TITLE, UNITED KINGDOM, ROS, REGISTERS OF SCOTLAND]
+    sources: ["ros_wms_source:ros_cadastralparcel"]
+    min_scale: 35
+    max_scale: 4000000
+
+# Sources
+sources:
+  ros_wms_source:
+    type: wms
+    req:
+      transparent: true
+      url: http://geoserver-master-prod.thinkwhere-labs.com:8080/geoserver/wms?
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    coverage: *bngcoverage
+
+# Global Settings
+globals:
+  cache:
+    base_dir: /mapproxy/cache
+    lock_dir: /opt/locks
+    tile_lock_dir: /opt/tile_locks
+  image:
+    resampling_method: bicubic # nearest/bilinear
+    # Enable 24bit PNG images. Defaults to true (8bit PNG)
+    paletted: false
+    formats:
+      custom_format:
+        format: image/png
+        # the custom format will be stored as 8bit PNG
+        mode: P
+        colors: 32
+        transparent: true
+        encoding_options:
+        # The algorithm used to quantize (reduce) the image colors
+          quantizer: fastoctree
+      image/jpeg:
+        encoding_options:
+          jpeg_quality: 70
+  srs:
+    axis_order_ne: ['EPSG:3035']
+  http:
+    client_timeout: 600000

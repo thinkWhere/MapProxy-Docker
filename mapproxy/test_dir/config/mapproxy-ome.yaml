@@ -1,0 +1,96 @@
+# theMapCloud MapProxy Base Configuration
+parts:
+  coverages:
+    worldcoverage: &worldcoverage
+      bbox: [-180, -80, 180, 85]
+      bbox_srs: EPSG:4326
+
+services:
+  demo:
+  wmts:
+  wms:
+    md:
+      title: thinkWhere Open Maps For Europe Web Services
+      abstract: Web services published by thinkWhere Ltd.
+      online_resource: http://www.thinkwhere.com
+      contact:
+        person: Alan Moore
+        position: CEO
+        organization: thinkWhere Ltd
+        address: "8-10 Corn Exchange Road"
+        city: Stirling
+        postcode: FK8 2HX
+        country: Scotland
+        phone: +44(0)1786 476060
+        email: support@thinkwhere.com
+      access_constraints: None
+      fees: 'None'
+    # The order is important to ArcGIS when adding WMS world datasets. EPSG3857 needs to be the first in the list.
+    srs: ['EPSG:3857', 'EPSG:3035']
+    bbox_srs:
+    - 'EPSG:3857'
+    - 'EPSG:3035'
+    image_formats: ['image/png', 'image/png8']
+    featureinfo_types: [text, html, xml, json]
+
+# Layers
+layers:
+- name: old_basemap
+  title: Old Basemap
+  sources: [old_basemap_source]
+  min_scale: 50000
+  max_scale: 20000000
+
+# Sources
+sources:
+  # theMapCloud
+  old_basemap_source:
+    type: wms
+    req:
+      url: https://api.themapcloud.com/maps/wms?
+      layers: eurogeographics_basemap_3857
+      token: ImV1cm9nZW9ncmFwaGljc19iYXNlbWFwIg.D63Vwg.jTVqAlNTKOe3EGcKzMna-HqBvD0
+    wms_opts:
+      legendgraphic: true
+    coverage: *worldcoverage
+
+# Grids
+grids:
+  # Various grids are defined based on the resolutions required for the product
+  # All Grids start at the highest resolution to avoid large numbers of requests from clients
+  # Source resolution limits are used to avoid making requests to GeoServer where the data is out of scale
+  # Grids stop at the min resolution required for a product to avoid caching large numbers of empty tiles
+
+  # Global Web Mercator
+  euro_3857:
+    base: GLOBAL_WEBMERCATOR
+    num_levels: 25
+
+
+# Global Settings
+globals:
+  cache:
+    base_dir: /mapproxy/cache
+    lock_dir: /opt/locks
+    tile_lock_dir: /opt/tile_locks
+  image:
+    resampling_method: bicubic # nearest/bilinear
+    # Enable 24bit PNG images. Defaults to true (8bit PNG)
+    paletted: false
+    formats:
+      custom_format:
+        format: image/png
+        # the custom format will be stored as 8bit PNG
+        mode: P
+        colors: 32
+        transparent: true
+        encoding_options:
+        # The algorithm used to quantize (reduce) the image colors
+          quantizer: fastoctree
+      image/jpeg:
+        encoding_options:
+          jpeg_quality: 70
+  srs:
+    axis_order_ne: ['EPSG:3035']
+  http:
+    client_timeout: 600000
