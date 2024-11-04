@@ -1,28 +1,36 @@
-FROM python:3.7-slim-buster
+FROM python:3.13-slim-bookworm
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-  python-yaml \
+  dos2unix \
+  python3-yaml \
+  python3-pil \
+  python3-pyproj \
+  python3-lxml \
+  python3-dev \
+  python3-shapely \
   libgeos-dev \
-  python-lxml \
   libgdal-dev \
   build-essential \
-  python-dev \
-  libjpeg-dev \
-  zlib1g-dev \
-  libfreetype6-dev \
-  python-virtualenv \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+#  
+#  libjpeg-dev \
+#  zlib1g-dev \
+#  libfreetype6-dev \
+#  python-virtualenv \
+
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==1.11.0 uwsgi requests geojson
+RUN pip install Shapely Pillow MapProxy==3.1.0 requests geojson pg8000 uwsgi
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
 RUN chmod 0755 /uwsgi.ini
 ADD start.sh /start.sh
+RUN dos2unix /start.sh
 RUN chmod 0755 /start.sh
+
 # Temp fix for coverages until next version of MapProxy available
-COPY geom.py /usr/local/lib/python3.4/site-packages/mapproxy/util/geom.py
+#COPY geom.py /usr/local/lib/python3.7/site-packages/mapproxy/util/geom.py
 
 #USER www-data
 # Now launch mappproxy in the foreground

@@ -26,6 +26,7 @@ services:
      - "1717"
     volumes:
      - c:\code\themapcloud-mapproxy:/mapproxy/config
-     - c:\temp\cache:/mapproxy/cache
+     #- c:\code\MapProxy-Docker\mapproxy\test_dir\config:/mapproxy/config
+     - c:\code\MapProxy-Docker\mapproxy\test_dir\cache:/mapproxy/cache
     environment:
      - MAPPROXY_ENV=staging
