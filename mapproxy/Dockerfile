@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 #  python-virtualenv \
 
 RUN pip install --upgrade pip
-RUN pip install Shapely Pillow MapProxy==3.1.0 requests geojson pg8000 uwsgi
+RUN pip install Shapely Pillow MapProxy==3.1.0 requests geojson pg8000 uwsgi werkzeug
 RUN pip install --pre schematics
 
 ADD uwsgi.ini /uwsgi.ini
